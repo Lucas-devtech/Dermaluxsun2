@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Login – DermaluxSun</title>
+
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@1,400;1,600&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="cssDermalux.css">
+
+</head>
+<body>
+
+  <header id="topbar">
+
+    <div class="user-menu" id="userMenu">
+      <button class="user-chip" id="userChip" onclick="toggleUserMenu(event)"
+              aria-haspopup="true" aria-expanded="false" aria-label="Menu da conta">
+        <span class="user-dot">
+          <svg id="userIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>
+          </svg>
+          <span id="userInicial" class="oculto"></span>
+        </span>
+        <span class="user-name" id="userName">Entrar</span>
+      </button>
+      <div class="user-dropdown" id="userDropdown">
+        <div id="menuDeslogado">
+          <a href="login.html">Login</a>
+          <a href="cadastro.html">Cadastro</a>
+        </div>
+        <div id="menuLogado" class="oculto">
+          <div class="user-dropdown-info" id="userInfo"></div>
+          <button type="button" onclick="fazerLogout()">Sair</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="logo" onclick="window.location.href='index.html'">Dermalux<em>Sun</em></div>
+
+    <div class="search-wrap">
+
+      <svg fill="none" viewBox="0 0 24 24" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/>
+        <path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Busque em nossa loja"
+        oninput="filterProducts()"
+        aria-label="Buscar produtos"
+      />
+    </div>
+
+    <nav class="nav" aria-label="Navegação principal">
+      <a href="index.html">Início</a>
+      <a href="produtos.html">Produtos</a>
+      <a href="promocoes.html">Promoções</a>
+      <a href="suporte.html">Suporte</a>
+      <a href="adicionar.html" class="nav-adicionar oculto">Adicionar</a>
+    </nav>
+
+    <a class="btn-wpp" href="https://wa.me/5531981067709" target="_blank" rel="noopener">
+
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+      </svg>
+      WhatsApp
+    </a>
+
+    <button class="btn-cart" onclick="toggleCart()" aria-label="Abrir carrinho de compras">
+      <svg fill="none" viewBox="0 0 24 24" stroke-width="2">
+        <path d="M6 2 3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <path d="M16 10a4 4 0 01-8 0"/>
+      </svg>
+      <span class="cart-badge" id="cartBadge">0</span>
+    </button>
+
+    <button type="button" class="hamburger" id="hamburger" onclick="toggleMobileNav()"
+            aria-label="Abrir menu" aria-expanded="false" aria-controls="mobile-nav">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+  </header>
+
+  <div id="mobile-nav" onclick="closeMobileNav(event)">
+    <div id="mobile-nav-panel">
+      <button class="mobile-nav-close" onclick="closeMobileNav()" aria-label="Fechar menu">Fechar</button>
+
+      <div class="logo" style="font-size:1.4rem">Dermalux<em>Sun</em></div>
+
+      <ul class="mobile-nav-links">
+        <li><a href="index.html"      onclick="closeMobileNav()">Início</a></li>
+        <li><a href="produtos.html"  onclick="closeMobileNav()">Produtos</a></li>
+        <li><a href="promocoes.html" onclick="closeMobileNav()">Promoções</a></li>
+        <li><a href="suporte.html"   onclick="closeMobileNav()">Suporte</a></li>
+        <li class="nav-adicionar oculto"><a href="adicionar.html" onclick="closeMobileNav()">Adicionar</a></li>
+      </ul>
+
+      <a class="btn-wpp" style="margin-top:2rem; justify-content:center"
+         href="https://wa.me/5531981067709" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+        </svg>
+        Fale no WhatsApp
+      </a>
+    </div>
+  </div>
+
+  <section id="login">
+    <div style="max-width:1100px; margin:0 auto">
+      <form class="register-wrap fade-up" id="loginForm" onsubmit="handleLoginSubmit(event)">
+        <div class="section-tag">Acesso</div>
+        <h2 class="section-title" style="font-size:1.8rem; margin-bottom:1.2rem">Entrar na <em>minha conta</em></h2>
+        <div class="form-group">
+          <label for="log-email">E-mail</label>
+          <input type="email" id="log-email" name="email" placeholder="seu@email.com"/>
+        </div>
+        <div class="form-group">
+          <label for="log-pass">Senha</label>
+          <input type="password" id="log-pass" name="senha" placeholder="Sua senha"/>
+        </div>
+        <label class="check-row">
+          <input type="checkbox" id="log-admin" />
+          Entrar como administrador
+        </label>
+        <button type="submit" class="btn-register">Entrar</button>
+        <p class="form-link">Ainda não tem conta? <a href="cadastro.html">Cadastre-se</a></p>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-grid">
+
+      <div class="footer-brand">
+        <span class="logo-footer">DermaluxSun</span>
+        <p>Proteção solar premium para cada momento da sua vida. Porque cuidar da sua pele é um ato de amor-próprio.</p>
+        <div class="footer-socials">
+          <a class="footer-social" href="https://wa.me/5531981067709" target="_blank" title="WhatsApp" aria-label="WhatsApp">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+            </svg>
+          </a>
+          <a class="footer-social" href="#" title="Instagram" aria-label="Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="5"/>
+              <circle cx="12" cy="12" r="4"/>
+              <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+            </svg>
+          </a>
+          <a class="footer-social" href="#" title="Facebook" aria-label="Facebook">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M22 12.06C22 6.53 17.52 2 12 2S2 6.53 2 12.06c0 5 3.66 9.13 8.44 9.94v-7.03H7.9v-2.91h2.54V9.85c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.44 2.91h-2.34V22c4.78-.81 8.44-4.94 8.44-9.94Z"/>
+            </svg>
+          </a>
+          <a class="footer-social" href="#" title="TikTok" aria-label="TikTok">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M16.5 2c.36 2.4 1.8 4.02 4.2 4.2v3.02c-1.42.06-2.68-.36-4.2-1.2v6.62c0 3.5-2.86 6.36-6.36 6.36S3.78 17.94 3.78 14.44s2.86-6.36 6.36-6.36c.36 0 .72.03 1.06.09v3.15a3.2 3.2 0 00-1.06-.18 3.2 3.2 0 100 6.4 3.2 3.2 0 003.2-3.2V2h3.16Z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Produtos</h4>
+        <ul>
+          <li><a href="produtos.html">AquaShield FPS 50+</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Ajuda</h4>
+        <ul>
+          <li><a href="suporte.html">Suporte</a></li>
+          <li><a href="https://wa.me/5531981067709" target="_blank">Fale Conosco</a></li>
+          <li><a href="suporte.html">Trocas &amp; Dev.</a></li>
+          <li><a href="suporte.html">Revendedores</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contato</h4>
+        <ul>
+          <li><a href="https://wa.me/5531981067709">(31) 98106-7709</a></li>
+          <li><a href="mailto:contato@dermaluxsun.com.br">contato@dermaluxsun</a></li>
+          <li><a href="cadastro.html">Cadastre-se</a></li>
+          <li><a href="promocoes.html">Promoções</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2025 DermaluxSun Cosméticos. Todos os direitos reservados.</span>
+      <span>Desenvolvido com muito protetor solar.</span>
+    </div>
+  </footer>
+
+  <div id="cart-overlay" onclick="handleCartOverlayClick(event)" role="dialog" aria-label="Carrinho de compras">
+    <div id="cart-drawer">
+
+      <div class="cart-header">
+        <h3>Seu Carrinho</h3>
+        <button class="cart-close" onclick="toggleCart()" aria-label="Fechar carrinho">Fechar</button>
+      </div>
+
+      <div class="cart-items" id="cartItems">
+        <div class="cart-empty">
+          <div class="cart-empty-icon"></div>
+          <div>Carrinho vazio — adicione produtos!</div>
+        </div>
+      </div>
+
+      <div class="cart-footer">
+        <div class="cart-total" id="cartDiscountRow" style="display:none">
+          <span class="cart-total-label">Desconto do cupom</span>
+          <span class="cart-total-val" id="cartDiscount">− R$ 0,00</span>
+        </div>
+        <div class="cart-total">
+          <span class="cart-total-label">Total</span>
+          <span class="cart-total-val" id="cartTotal">R$ 0,00</span>
+        </div>
+        <div class="cart-coupon">
+          <input type="text" id="cupomInput" placeholder="Código do cupom" aria-label="Código do cupom"
+                 onkeydown="if (event.key === 'Enter') { aplicarCupomDigitado(); }" />
+          <button class="btn-aplicar" onclick="aplicarCupomDigitado()">Aplicar cupom</button>
+        </div>
+        <button class="cart-coupon-remove" id="cupomRemover" onclick="removerCupom()" style="display:none"></button>
+        <button class="btn-checkout" onclick="checkout()">
+
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+          </svg>
+          Finalizar pelo WhatsApp
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="toast" role="alert" aria-live="polite">
+    <span id="toastMsg">Produto adicionado!</span>
+  </div>
+
+  <a id="wpp-float"
+     href="https://wa.me/5531981067709"
+     target="_blank"
+     rel="noopener"
+     title="Fale no WhatsApp"
+     aria-label="Abrir WhatsApp para suporte">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+    </svg>
+  </a>
+
+
+  <script src="jsLayout.js"></script>
+  <script src="jsToast.js"></script>
+  <script src="jsCarrinho.js"></script>
+  <script src="jsCupom.js"></script>
+  <script src="jsProdutos.js"></script>
+  <script src="jsCadastro.js"></script>
+  <script src="jsLogin.js"></script>
+  <script src="jsSessao.js"></script>
+  <script src="jsInit.js"></script>
+
+</body>
+</html>
